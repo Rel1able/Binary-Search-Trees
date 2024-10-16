@@ -7,11 +7,9 @@ class Node{
 }
 
 class Tree{
-    constructor(root) {
+    constructor(root = null) {
         this.root = root;
     }
-    
-
     
     buildTree(arr, start = 0, end = arr.length - 1) {
         
@@ -26,7 +24,7 @@ class Tree{
         return root;
     }
     filterArr(array) {
-        return [...new Set(array)];
+        return [...new Set(array)].sort((a, b) => a - b);
     }
 
     insertNode(root, value) {
@@ -78,6 +76,21 @@ class Tree{
         return root;
         
     }
+    findNode(root, value) {
+        if (root === null) {
+            console.log(`Value ${value} was not found`);
+            return null;
+        }
+        if (root.data === value) {
+            console.log(`Value ${value} was found`);
+            return root.data;
+        }
+        if (root.data > value) {
+            return this.findNode(root.left, value);
+        } else {
+            return this.findNode(root.right, value);
+        }
+    }
 }
 
 
@@ -105,3 +118,5 @@ testTree.insertNode(testTree.root, 222);
 prettyPrint(testTree.root);
 testTree.deleteNode(testTree.root, 67);
 prettyPrint(testTree.root);
+testTree.findNode(testTree.root, 324); // Should print 324
+testTree.findNode(testTree.root, 325); // Should print null
