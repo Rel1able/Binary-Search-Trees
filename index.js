@@ -108,7 +108,36 @@ class Tree{
         }
         
     }
+    inOrder(root, callback = null) {
+        if (callback === null) {
+            throw new Error("Callback is required");
+        }
+        if (root === null) return;
+        
+        this.inOrder(root.left, callback);
+        callback(root);
+        this.inOrder(root.right, callback);
+    }
+    preOrder(root, callback = null) {
+        if (callback === null) {
+            throw new Error("Callback is required");
+        }
+        if (root === null) return;
 
+        callback(root);
+        this.preOrder(root.left, callback);
+        this.preOrder(root.right, callback);
+    }
+
+    postOrder(root, callback) {
+        if (callback === null) {
+            throw new Error("Callback is required");
+        }
+        if (root === null) return;
+        this.postOrder(root.left, callback);
+        this.postOrder(root.right, callback);
+        callback(root);
+    }
 }
 
 
@@ -143,5 +172,10 @@ prettyPrint(testTree.root);
 testTree.findNode(testTree.root, 324); // Should print 324
 testTree.findNode(testTree.root, 325); // Should print null
 
-testTree.levelOrder(testTree.root, callback);
-testTree.levelOrder(testTree.root);
+//testTree.levelOrder(testTree.root, callback);
+//testTree.levelOrder(testTree.root);
+//testTree.inOrder(testTree.root, callback);
+//testTree.inOrder(testTree.root);
+prettyPrint(testTree.root);
+testTree.preOrder(testTree.root, callback);
+testTree.postOrder(testTree.root, callback);
