@@ -91,6 +91,24 @@ class Tree{
             return this.findNode(root.right, value);
         }
     }
+    levelOrder(root, callback = null) {
+        if (callback === null) {
+            throw new Error("Callback is required");
+        }
+        if (root === null) return;
+            let queue = [];
+            queue.push(root);
+
+        while (queue.length !== 0) {
+            let current = queue.shift();
+            callback(current);
+            if (current.left !== null) queue.push(current.left);
+            if (current.right !== null) queue.push(current.right);
+        
+        }
+        
+    }
+
 }
 
 
@@ -111,6 +129,10 @@ let testTree = new Tree();
 
 let arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 
+function callback(node) {
+    console.log(node.data);
+}
+
 let filteredArr = testTree.filterArr(arr);
 testTree.root = testTree.buildTree(filteredArr);
 prettyPrint(testTree.root);
@@ -120,3 +142,6 @@ testTree.deleteNode(testTree.root, 67);
 prettyPrint(testTree.root);
 testTree.findNode(testTree.root, 324); // Should print 324
 testTree.findNode(testTree.root, 325); // Should print null
+
+testTree.levelOrder(testTree.root, callback);
+testTree.levelOrder(testTree.root);
