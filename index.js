@@ -147,9 +147,25 @@ class Tree{
         return Math.max(leftHeight, rightHeight) + 1;
     }   
     depth(root, node) {
-        if (node === root) return -1;
-        let depthCount = 0;
+        if (root === null) return -1;
+        if (root.data === node.data) return 0;
+        let distance = this.depth(root.left, node);
 
+        if (distance >= 0) return distance + 1;
+
+        distance = this.depth(root.right, node);
+        if (distance >= 0) return distance + 1;
+
+        return -1;
+    }
+
+    isBalanced(root) {
+        if (root === null) return true;
+        let leftHeight = this.height(root.left);
+        let rightHeight = this.height(root.right);
+        if (Math.abs(leftHeight - rightHeight) > 1) return false;
+        
+        return this.isBalanced(root.left) && this.isBalanced(root.right);
     }
 }
 
@@ -193,3 +209,6 @@ prettyPrint(testTree.root);
 testTree.preOrder(testTree.root, callback);
 testTree.postOrder(testTree.root, callback);
 console.log(testTree.height(testTree.root));
+const testNode1 = new Node(324);
+console.log(testTree.depth(testTree.root, testNode1));
+console.log(testTree.isBalanced(testTree.root));
