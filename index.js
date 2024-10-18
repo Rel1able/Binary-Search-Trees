@@ -53,13 +53,13 @@ class Tree{
             root.right = this.deleteNode(root.right, value);
             return root;
         }
-
+        //Node with 1 child or no child
         if (root.left === null) {
             return root.right;
         } else if (root.right === null) {
             return root.left;
         }
-
+        //Node with 2 children
         let succParent = root;
         let succ = root.right;
         while (succ.left !== null) {
@@ -129,7 +129,7 @@ class Tree{
         this.preOrder(root.right, callback);
     }
 
-    postOrder(root, callback) {
+    postOrder(root, callback = null) {
         if (callback === null) {
             throw new Error("Callback is required");
         }
@@ -137,6 +137,19 @@ class Tree{
         this.postOrder(root.left, callback);
         this.postOrder(root.right, callback);
         callback(root);
+    }
+
+    height(root) {
+        if (root === null) return 0;
+        const leftHeight = this.height(root.left);
+        const rightHeight = this.height(root.right);
+
+        return Math.max(leftHeight, rightHeight) + 1;
+    }   
+    depth(root, node) {
+        if (node === root) return -1;
+        let depthCount = 0;
+
     }
 }
 
@@ -179,3 +192,4 @@ testTree.findNode(testTree.root, 325); // Should print null
 prettyPrint(testTree.root);
 testTree.preOrder(testTree.root, callback);
 testTree.postOrder(testTree.root, callback);
+console.log(testTree.height(testTree.root));
