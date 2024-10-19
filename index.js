@@ -167,6 +167,14 @@ class Tree{
         
         return this.isBalanced(root.left) && this.isBalanced(root.right);
     }
+    rebalance() {
+        let nodesArr = [];
+        this.inOrder(this.root, node => nodesArr.push(node.data));
+
+        this.root = this.buildTree(nodesArr);
+    }
+
+    
 }
 
 
@@ -191,24 +199,65 @@ function callback(node) {
     console.log(node.data);
 }
 
-let filteredArr = testTree.filterArr(arr);
-testTree.root = testTree.buildTree(filteredArr);
-prettyPrint(testTree.root);
-testTree.insertNode(testTree.root, 222);
-prettyPrint(testTree.root);
-testTree.deleteNode(testTree.root, 67);
-prettyPrint(testTree.root);
-testTree.findNode(testTree.root, 324); // Should print 324
-testTree.findNode(testTree.root, 325); // Should print null
+//let filteredArr = testTree.filterArr(arr);
+//testTree.root = testTree.buildTree(filteredArr);
+//prettyPrint(testTree.root);
+//testTree.insertNode(testTree.root, 222);
+//prettyPrint(testTree.root);
+//testTree.deleteNode(testTree.root, 67);
+//testTree.findNode(testTree.root, 324); // Should print 324
+//testTree.findNode(testTree.root, 325); // Should print null
 
 //testTree.levelOrder(testTree.root, callback);
 //testTree.levelOrder(testTree.root);
 //testTree.inOrder(testTree.root, callback);
 //testTree.inOrder(testTree.root);
-prettyPrint(testTree.root);
-testTree.preOrder(testTree.root, callback);
-testTree.postOrder(testTree.root, callback);
-console.log(testTree.height(testTree.root));
-const testNode1 = new Node(324);
-console.log(testTree.depth(testTree.root, testNode1));
-console.log(testTree.isBalanced(testTree.root));
+//prettyPrint(testTree.root);
+//testTree.preOrder(testTree.root, callback);
+//testTree.postOrder(testTree.root, callback);
+//console.log(testTree.height(testTree.root));
+//const testNode1 = new Node(324);
+//console.log(testTree.depth(testTree.root, testNode1));
+//console.log(testTree.isBalanced(testTree.root));
+//testTree.rebalance();
+
+
+function generateRandomNum(numbers, maxLength) {
+    let arr = [];
+    for (let i = 0; i < maxLength; i++){
+        let randomNum = Math.round(Math.random() * numbers);
+        if (!arr.includes(randomNum)) {
+            arr.push(randomNum);
+        }
+    }
+    return arr;
+}
+
+
+function driverScript() {
+    let testTree2 = new Tree();
+    let testArr = generateRandomNum(99, 10);
+    let filteredTestArr = testTree2.filterArr(testArr);
+    testTree2.root = testTree2.buildTree(filteredTestArr);
+    console.log(testTree2.isBalanced(testTree2.root));
+    printTraversals(testTree2);
+    testTree2.insertNode(testTree2.root, 124);
+    testTree2.insertNode(testTree2.root, 256);
+    console.log(testTree2.isBalanced(testTree2.root));
+    testTree2.rebalance();
+    console.log(testTree2.isBalanced(testTree2.root));
+    printTraversals(testTree2);
+}
+
+function printTraversals(tree) {
+    console.log("Level Order Traversal");
+    tree.levelOrder(tree.root, callback);
+    console.log("preOrder Traversal")
+    tree.preOrder(tree.root, callback);
+    console.log("postOrder traversal");
+    tree.postOrder(tree.root, callback);
+    console.log("inOrder Traversal");
+    tree.inOrder(tree.root, callback);
+}
+
+driverScript();
